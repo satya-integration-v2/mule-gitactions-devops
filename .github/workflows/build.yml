@@ -55,12 +55,14 @@ jobs:
       with:
         name: artifacts
     - name: Deploy to Sandbox
-      env:
+      env:      
         ID: ${{ secrets.CONNECTED_APP_CLIENT_ID }}
         SECRET: ${{ secrets.CONNECTED_APP_CLIENT_SECRET }}
+        ENV: ${{secrets.ENV}}
       run: |
         artifactName=$(ls *.jar | head -1)
         mvn deploy -DmuleDeploy \
          -Dmule.artifact=$artifactName \
          -Dclient.id="$ID" \
-         -Dclient.secret="$SECRET" 
+         -Dclient.secret="$SECRET"
+         -Denv="$ENV"
